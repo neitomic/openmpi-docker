@@ -14,9 +14,13 @@ ENV NOTVISIBLE "in users profiles"
 RUN echo "export VISIBLE=now" >> /etc/profile
 
 # For build and install OpenMPI
-RUN wget https://www.dropbox.com/s/ylloqxrpyay2co9/openmpi-1.8.4.tar.gz
-RUN tar -zxvf openmpi-1.8.4.tar.gz
+ADD source/openmpi-1.8.4.tar.gz /root/
+RUN tar -zxvf /root/openmpi-1.8.4.tar.gz -C /root/
 
+#Compile and install OpenMPI at /root/.openmpi
+WORKDIR /root/openmpi-1.8.4/
+RUN configure --prefix="/usr/local"
+RUN make all install
 
 EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]
