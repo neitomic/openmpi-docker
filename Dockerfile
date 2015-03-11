@@ -53,8 +53,14 @@ ENV SYSTELCFG=/root/telemac/v6p2r1/config/systel.cis-ubuntu.cfg
 # Compile OpenTeleMac
 RUN compileTELEMAC.py
 
+# Copy script
+COPY ssh /root/ssh
+
+# Install expect
+RUN apt-get -y install expect
+
+
 # Configure SSH service.
-WORKDIR /root/
 EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]
 

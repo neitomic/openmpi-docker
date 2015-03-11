@@ -1,13 +1,16 @@
-#!/bin/bash
-ip_addr=$1
+#!/usr/bin/expect -f
 
-/usr/bin/expect << EOF
+set ipadd [lindex $argv 0]
 
-spawn ssh-copy-id root@$ip_addr
+spawn ssh-copy-id root@$ipadd
 expect "(yes/no)?"
 send "yes\r"
-expect "password:"
+expect "assword: "
+send "screencat\r"
+expect "assword:"
+send "screencat\r"
+expect "assword: "
+send "screencat\r"
+expect "assword:"
 send "screencat\r"
 interact
-
-EOF
