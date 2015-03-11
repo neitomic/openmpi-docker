@@ -59,8 +59,8 @@ COPY ssh /root/ssh
 # Install expect
 RUN apt-get -y install expect
 
-
 # Configure SSH service.
+WORKDIR /root/
 EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]
 
