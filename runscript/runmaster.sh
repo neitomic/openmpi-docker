@@ -1,33 +1,33 @@
 #!/bin/bash
 
 echo "Initializing Master container...."
-masterid=$(docker run -d -it -P --privileged=true -v /data:/data tiennt/ompi)
-masterip=`docker inspect --format '{{ .NetworkSettings.IPAddress }}' ${masterid}`
+masterid=$(sudo docker run -d -it -P --privileged=true -v /data:/data tiennt/ompi)
+masterip=`sudo docker inspect --format '{{ .NetworkSettings.IPAddress }}' ${masterid}`
 NUMBER_SLAVE=$1
 echo "done."
 
 echo "Initializing slave containers...."
 for (( c=0; c<$NUMBER_SLAVE; c++ ))
 do
-  slaveid[${c}]=$(docker run -d -it --privileged=true -v /data:/data tiennt/ompi)
-  slaveip[${c}]=`docker inspect --format '{{ .NetworkSettings.IPAddress }}' ${slaveid[${c}]}`
+  slaveid[${c}]=$(sudo docker run -d -it -P --privileged=true -v /data:/data tiennt/ompi)
+  slaveip[${c}]=`sudo docker inspect --format '{{ .NetworkSettings.IPAddress }}' ${slaveid[${c}]}`
 done
 SLAVE_NUM=${#slaveid[@]}
 echo "done. ${SLAVE_NUM} slaves initialed!"
 
 echo "Generate RSA key..."
-docker exec ${masterid} ssh-keygen -t rsa -N "" -f /root/.ssh/id_rsa >> /dev/null
+sudo docker exec ${masterid} ssh-keygen -t rsa -N "" -f /root/.ssh/id_rsa >> /dev/null
 
 for (( c=0; c<$SLAVE_NUM; c++ ))
 do
-  docker exec ${slaveid[${c}]} ssh-keygen -t rsa -N "" -f /root/.ssh/id_rsa >> /dev/null
+  sudo docker exec ${slaveid[${c}]} ssh-keygen -t rsa -N "" -f /root/.ssh/id_rsa >> /dev/null
 done
 echo "done."
 
 echo "Add ssh key of master to slaves.."
 for (( c=0; c<$SLAVE_NUM; c++ ))
 do
-  docker exec ${masterid} /root/ssh/ssh-copy-id.sh ${slaveip[${c}]} >> /dev/null
+  sudo docker exec ${masterid} /root/ssh/ssh-copy-id.sh ${slaveip[${c}]} >> /dev/null
 done
 
 echo "done."
@@ -41,7 +41,7 @@ do
 done
 echo "Done."
 
-docker exec -it ${masterid} /bin/bash
+sudo docker exec -it ${masterid} /bin/bash
 
-docker stop $(docker ps -a -q)
-docker rm $(docker ps -a -q)
+sudo docker stop $(sudo docker ps -a -q)
+sudo docker rm $(sudo docker ps -a -q)

@@ -59,6 +59,9 @@ COPY ssh /root/ssh
 # Install expect
 RUN apt-get -y install expect
 
+RUN sed -i "1iexport PATH=$PATH:/root/.openmpi/bin" /root/.bashrc
+RUN sed -i "1iexport LD_LIBRARY_PATH=/root/.openmpi/lib" /root/.bashrc
+
 # Configure SSH service.
 WORKDIR /root/
 EXPOSE 22
