@@ -1,9 +1,33 @@
 #!/bin/bash
 
+function error_exit
+{
+	echo "$1" 1>&2
+	exit 1
+}
+
+if [ "$#" -lt 1 ]; then
+        error_exit "Usage: $0 NUMBER_CONTAINER"
+        exit 1
+fi
+
+
+NUMBER_SLAVE=$1
+
+re='^[0-9]+$'
+if ! [[ ${NUMBER_SLAVE} =~ $re ]] ; then
+	error_exit "Error: Not a number"
+	exit 1
+fi
+
+if [ ${NUMBER_SLAVE} -lt 1 ]; then
+	error_exit "Number of container must greater or equal with 1!"
+	exit 1
+fi
+ 
 echo "Initializing Master container...."
 masterid=$(sudo docker run -d -it -P --privileged=true -v /data:/data tiennt/ompi)
 masterip=`sudo docker inspect --format '{{ .NetworkSettings.IPAddress }}' ${masterid}`
-NUMBER_SLAVE=$1
 echo "done."
 
 echo "Initializing slave containers...."
@@ -34,7 +58,7 @@ echo "done."
 #docker exec ${masterid} touch /root/hostfile
 
 echo "Create host file..."
-echo "" > /data/hostfile
+echo ${masterip} > /data/hostfile
 for (( c=0; c<$SLAVE_NUM; c++ ))
 do
   echo ${slaveip[${c}]} >> /data/hostfile
