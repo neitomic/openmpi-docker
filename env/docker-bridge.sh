@@ -1,7 +1,7 @@
 #!/bin/bash
 
 IP_POSFIX=$(ifconfig | grep 'inet 172.28.182' | awk '{print $2}' | awk -F "." '{print $4}')
-BRIDGE_NAME=br0
+BRIDGE_NAME=docker0
 NETMASK=255.255.255.0
 BRIDGE_IP="172.17.${IP_POSFIX}.1"
 echo ${IP_POSFIX}
