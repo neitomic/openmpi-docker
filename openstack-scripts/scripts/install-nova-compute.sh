@@ -1,3 +1,5 @@
+#!/bin/bash
+
 yum install openstack-nova-compute sysfsutils
 
 MY_IP=$(sh ../tools/getIPAddress.sh)

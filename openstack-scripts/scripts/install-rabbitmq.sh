@@ -1,3 +1,5 @@
+#!/bin/bash
+
 yum install rabbitmq-server
 systemctl enable rabbitmq-server.service
 systemctl start rabbitmq-server.service
