@@ -6,6 +6,12 @@ set PASSWD_NEW [lindex $argv 1]
 spawn mysql_secure_installation
 expect {Enter current password for root (enter for none):}
 send "${PASSWD_CUR}\r"
+
+#######################################################
+# Another way:                                        #
+# expect -exact "Change the root password? \[Y\/n\]"  #
+#######################################################
+
 expect {Change the root password?}
 send "Y\r"
 expect {New password:}
