@@ -1,6 +1,6 @@
 #!/bin/bash
 
-yum install rabbitmq-server
+yum install -y rabbitmq-server
 systemctl enable rabbitmq-server.service
 systemctl start rabbitmq-server.service
 rabbitmqctl change_password guest ${RABBIT_PASS}
