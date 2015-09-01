@@ -12,12 +12,12 @@ expect {New password:}
 send "${PASSWD_NEW}\r"
 expect {Re-enter new password:}
 send "${PASSWD_NEW}\r"
-expect {Remove anonymous users? [Y/n] }
+expect {Remove anonymous users?}
 send "n\r"
-expect {Disallow root login remotely? [Y/n] }
+expect {Disallow root login remotely?}
 send "n\r"
-expect {Remove test database and access to it? [Y/n] }
+expect {Remove test database and access to it?}
 send "Y\r"
-expect {Reload privilege tables now? [Y/n] }
+expect {Reload privilege tables now?}
 send "Y\r"
 interact
