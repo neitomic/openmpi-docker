@@ -7,6 +7,9 @@ spawn mysql_secure_installation
 expect {Enter current password for root (enter for none):}
 send "${PASSWD_CUR}\r"
 
+expect {Set root password?}
+send "Y\r"
+
 #######################################################
 # Another way:                                        #
 # expect -exact "Change the root password? \[Y\/n\]"  #

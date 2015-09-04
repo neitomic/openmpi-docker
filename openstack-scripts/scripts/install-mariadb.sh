@@ -9,4 +9,4 @@ sed -i "/\[mysqld\]/a bind-address = ${CONTROLLER_IP}\ndefault-storage-engine = 
 systemctl enable mariadb.service
 systemctl start mariadb.service
 
-../tools/auto_init_mariadb.sh ${MYSQL_PASS}
+../tools/auto_init_mariadb.sh ${MYSQL_PASS} ${MYSQL_ORIGINAL_PASS}

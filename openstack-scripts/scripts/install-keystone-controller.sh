@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source ../common/openstack.conf
+
 KEYSTONE_SQL_FILE=${KEYSTONE_SQL_FILE:-../sql_scripts/create_db_keystone.sql}
 sed -i "s/KEYSTONE_DBPASS/${KEYSTONE_DBPASS}/g" ${KEYSTONE_SQL_FILE}
 mysql -u "root" "-p${MYSQL_PASS}" < ${KEYSTONE_SQL_FILE}
@@ -84,8 +86,8 @@ systemctl start httpd.service
 
 
 
-export OS_SERVICE_TOKEN=${TOKEN}
-export OS_SERVICE_ENDPOINT=http://controller:35357/v2.0
+export OS_TOKEN=${TOKEN}
+export OS_URL=http://controller:35357/v2.0
 
 openstack service create \
   --name keystone --description "OpenStack Identity" identity
