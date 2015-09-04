@@ -1,6 +1,9 @@
 #!/bin/bash
 
-mysql -u "root" "-p${MYSQL_PASS}" < ../sql_scripts/create_db_keystone.sql
+KEYSTONE_SQL_FILE=${KEYSTONE_SQL_FILE:-../sql_scripts/create_db_keystone.sql}
+sed -i "s/KEYSTONE_DBPASS/${KEYSTONE_DBPASS}/g" ${KEYSTONE_SQL_FILE}
+mysql -u "root" "-p${MYSQL_PASS}" < ${KEYSTONE_SQL_FILE}
+sed -i "s/${KEYSTONE_DBPASS}/KEYSTONE_DBPASS/g" ${KEYSTONE_SQL_FILE}
 
 TOKEN=$(openssl rand -hex 10)
 
