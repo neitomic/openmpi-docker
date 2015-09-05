@@ -1,11 +1,14 @@
 #!/bin/bash
 
+PARENT_DIR=$( cd `dirname $0`/.. && pwd )
+BASE_DIR=${BASE_DIR:-$PARENT_DIR}
+
 NOVA_SQL_FILE=${NOVA_SQL_FILE:-../sql_scripts/create_db_nova.sql}
 sed -i "s/NOVA_DBPASS/${NOVA_DBPASS}/g" ${NOVA_SQL_FILE}
 mysql -u "root" "-p${MYSQL_PASS}" < ${NOVA_SQL_FILE}
 sed -i "s/${NOVA_DBPASS}/NOVA_DBPASS/g" ${NOVA_SQL_FILE}
 
-source ../admin-openrc.sh
+source ${BASE_DIR}/admin-openrc.sh
 
 # keystone user-create --name nova --pass ${NOVA_PASS}
 # keystone user-role-add --user nova --tenant service --role admin

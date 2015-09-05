@@ -1,8 +1,11 @@
 #!/bin/bash
 
+PARENT_DIR=$( cd `dirname $0`/.. && pwd )
+BASE_DIR=${BASE_DIR:-$PARENT_DIR}
+
 yum install -y openstack-nova-compute sysfsutils
 
-MY_IP=$(sh ../tools/getIPAddress.sh)
+MY_IP=$(sh ${BASE_DIR}/tools/getIPAddress.sh)
 
 sed -i "/\[DEFAULT\]/a rpc_backend = rabbit\n\
 auth_strategy = keystone\n\

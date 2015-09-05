@@ -1,6 +1,9 @@
 #!/bin/bash
 
-source ../common/openstack.conf
+PARENT_DIR=$( cd `dirname $0`/.. && pwd )
+BASE_DIR=${BASE_DIR:-$PARENT_DIR}
+
+source ${BASE_DIR}/common/openstack.conf
 
 KEYSTONE_SQL_FILE=${KEYSTONE_SQL_FILE:-../sql_scripts/create_db_keystone.sql}
 sed -i "s/KEYSTONE_DBPASS/${KEYSTONE_DBPASS}/g" ${KEYSTONE_SQL_FILE}

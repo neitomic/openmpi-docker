@@ -1,12 +1,16 @@
 #!/bin/bash
 
-source common/openstack.conf
+export BASE_DIR=$( cd `dirname $0` && pwd )
 
-./scripts/install-ntp-controller.sh
+source ${BASE_DIR}/common/openstack.conf
 
-./scripts/install-openstack-package.sh
+${BASE_DIR}/tools/addHost.sh
 
-./scripts/install-mariadb.sh
+${BASE_DIR}/scripts/install-ntp-controller.sh
 
-./scripts/install-rabbitmq.sh
+${BASE_DIR}/scripts/install-openstack-package.sh
+
+${BASE_DIR}/scripts/install-mariadb.sh
+
+${BASE_DIR}/scripts/install-rabbitmq.sh
 

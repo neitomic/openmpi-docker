@@ -1,9 +1,14 @@
+#!/bin/bash
+
+PARENT_DIR=$( cd `dirname $0`/.. && pwd )
+BASE_DIR=${BASE_DIR:-$PARENT_DIR}
+
 GLANCE_SQL_FILE=${GLANCE_SQL_FILE:-../sql_scripts/create_db_glance.sql}
 sed -i "s/GLANCE_DBPASS/${GLANCE_DBPASS}/g" ${GLANCE_SQL_FILE}
 mysql -u "root" "-p${MYSQL_PASS}" < ${GLANCE_SQL_FILE}
 sed -i "s/${GLANCE_DBPASS}/GLANCE_DBPASS/g" ${GLANCE_SQL_FILE}
 
-source ../admin-openrc.sh
+source ${BASE_DIR}/admin-openrc.sh
 
 #keystone user-create --name glance --pass ${GLANCE_PASS}
 #keystone user-role-add --user glance --tenant service --role admin
@@ -65,5 +70,5 @@ sed -i "/^\[DEFAULT\]$/a notification_driver = noop" /etc/glance/glance-registry
 su -s /bin/sh -c "glance-manage db_sync" glance
 
 systemctl enable openstack-glance-api.service openstack-glance-registry.service
- systemctl start openstack-glance-api.service openstack-glance-registry.service
+systemctl start openstack-glance-api.service openstack-glance-registry.service
 
