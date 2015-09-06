@@ -22,9 +22,9 @@ send "${PASSWD_NEW}\r"
 expect {Re-enter new password:}
 send "${PASSWD_NEW}\r"
 expect {Remove anonymous users?}
-send "n\r"
+send "Y\r"
 expect {Disallow root login remotely?}
-send "n\r"
+send "Y\r"
 expect {Remove test database and access to it?}
 send "Y\r"
 expect {Reload privilege tables now?}
