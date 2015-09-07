@@ -17,7 +17,7 @@ yum -y upgrade > /dev/null
 echo "Done."
 
 echo "Installing OpenStack SELinux..."
-yum -y install openstack-selinux
+yum -y install openstack-selinux > /dev/null
 echo "Done."
 
 echo "DONE! Have a good day! :)"
