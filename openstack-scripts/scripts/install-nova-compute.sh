@@ -36,7 +36,7 @@ sed -i "/^\[glance\]$/a host = controller" /etc/nova/nova.conf
 sed -i "/^\[oslo_concurrency\]$/a lock_path = /var/lib/nova/tmp" /etc/nova/nova.conf
 
 KVM_SUPPORT=$(${BASE_DIR}/tools/kvmSupport.sh)
-if [ ${KVM_SUPPORT} -eq 0 ] 
+if [ ${KVM_SUPPORT} -eq 0 ]; then 
 	sed -i "/^\[libvirt\]$/a virt_type = qemu" /etc/nova/nova.conf
 fi
 echo "Done."
